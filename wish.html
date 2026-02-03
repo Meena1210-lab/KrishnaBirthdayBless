@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Birthday 🎂</title>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fff1eb, #ace0f9);
+      font-family: Arial;
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      max-width: 420px;
+      margin: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      position: relative;
+      z-index: 2;
+    }
+    img {
+      width: 180px;
+    }
+    .countdown {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .wish {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #444;
+    }
+    .share {
+      margin-top: 20px;
+      padding: 10px 18px;
+      background: #25D366;
+      color: white;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .petal {
+      position: fixed;
+      top: -10px;
+      font-size: 22px;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Flute music -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6f0d9b3d1b.mp3">
+</audio>
+
+<div class="card">
+  <img src="https://i.imgur.com/8QfQKpJ.png" alt="Little Krishna">
+
+  <div class="countdown" id="countdown"></div>
+  <div class="wish" id="wish"></div>
+
+  <button class="share" onclick="share()">📲 Share on WhatsApp</button>
+</div>
+
+<script>
+/* 🎂 SET BIRTHDAY DATE HERE */
+const birthday = new Date(2026, 1, 1); // Feb 1, 2026 (month starts from 0)
+
+/* Wishes (non-repeating) */
+const wishes = [
+  "May Lord Krishna bless your life with love and happiness 🦚💙",
+  "May your days be sweet like butter and bright like Krishna’s smile ✨",
+  "Krishna bless you with peace, success, and endless joy 🌸",
+  "Dance through life with happiness like little Krishna 🎶",
+  "May divine blessings follow you always 🌈🙏"
+];
+
+let used = JSON.parse(localStorage.getItem("usedWishes") || "[]");
+let available = wishes.filter(w => !used.includes(w));
+if (available.length === 0) {
+  used = [];
+  available = wishes;
+}
+const wish = available[Math.floor(Math.random() * available.length)];
+used.push(wish);
+localStorage.setItem("usedWishes", JSON.stringify(used));
+
+/* Name from URL */
+const name = new URLSearchParams(window.location.search).get("name") || "Dear";
+
+document.getElementById("wish").innerHTML =
+  `🎉 Happy Birthday <b>${name}</b>!<br><br>${wish}`;
+
+/* 🎉 Countdown Logic */
+function updateCountdown() {
+  const now = new Date();
+  let bday = new Date(now.getFullYear(), birthday.getMonth(), birthday.getDate());
+
+  if (bday < now) bday.setFullYear(now.getFullYear() + 1);
+
+  const diff = bday - now;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+  if (days === 0 && hours === 0 && minutes === 0) {
+    document.getElementById("countdown").innerHTML =
+      "🎉 Today is your Birthday! 🎂🦚";
+  } else {
+    document.getElementById("countdown").innerHTML =
+      `⏳ ${days} days ${hours} hours ${minutes} minutes left for your birthday 🎂`;
+  }
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+/* 🌸 Flower petals */
+for (let i = 0; i < 25; i++) {
+  const p = document.createElement("div");
+  p.className = "petal";
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (3 + Math.random() * 5) + "s";
+  p.innerHTML = "🌸";
+  document.body.appendChild(p);
+}
+
+/* 📲 WhatsApp share */
+function share() {
+  const text = `Happy Birthday ${name}! 🎂🦚\n${wish}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
+}
+</script>
+
+</body>
+</html>

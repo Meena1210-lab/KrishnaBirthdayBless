@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Wish 🎂</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      font-family: Arial;
+      text-align: center;
+      padding-top: 120px;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      width: 320px;
+      margin: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    input {
+      padding: 10px;
+      width: 90%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 25px;
+      border: none;
+      background: #ff6f91;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>🎉 Birthday Wish Generator 🎉</h2>
+    <input id="name" placeholder="Enter name">
+    <br>
+    <button onclick="go()">Generate Wish</button>
+  </div>
+
+  <script>
+    function go() {
+      const name = document.getElementById("name").value.trim();
+      if (name === "") {
+        alert("Please enter name");
+        return;
+      }
+      window.location.href = "wish.html?name=" + encodeURIComponent(name);
+    }
+  </script>
+</body>
+</html>
