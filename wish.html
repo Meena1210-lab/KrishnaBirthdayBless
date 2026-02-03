@@ -73,10 +73,14 @@
 </div>
 
 <script>
-/* 🎂 SET BIRTHDAY DATE HERE */
-const birthday = new Date(2026, 1, 26); // Feb 1, 2026 (month starts from 0)
+// 🎂 Birthday: 26th February (auto year)
+const today = new Date();
+let birthday = new Date(today.getFullYear(), 1, 26); // Feb = 1
 
-/* Wishes (non-repeating) */
+// If birthday already passed this year, use next year
+if (birthday < today) {
+  birthday = new Date(today.getFullYear() + 1, 1, 26);
+}
 const wishes = [
   "May Lord Krishna bless your life with love and happiness 🦚💙",
   "May your days be sweet like butter and bright like Krishna’s smile ✨",
@@ -143,5 +147,6 @@ function share() {
 
 </body>
 </html>
+
 
 
